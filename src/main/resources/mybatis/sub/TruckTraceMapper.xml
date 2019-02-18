@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.crane.sharding.dao.TruckTraceDAO">
+    <resultMap id="BaseResultMap" type="com.crane.sharding.DO.TruckTraceDO">
+        <id column="ID" jdbcType="BIGINT" property="id" />
+        <result column="truck_trace_code" jdbcType="VARCHAR" property="truckTraceCode"/>
+		<result column="create_time" jdbcType="VARCHAR" property="createTime"/>
+		<result column="status" jdbcType="INTEGER" property="status"/>
+		<result column="ext_att" jdbcType="VARCHAR" property="extAtt"/>
+    </resultMap>
+
+    <!-- 基本列 -->
+    <sql id="Base_Column_List">
+        ID, truck_trace_code,create_time, status, ext_att
+    </sql>
+
+    <!-- 单个插入 -->
+    <insert id="insert" keyProperty="id" useGeneratedKeys="true" parameterType="com.crane.sharding.DO.TruckTraceDO">
+        insert into t_sco_truck_trace (truck_trace_code, create_time, status, ext_att) values (#{truckTraceCode}, #{createTime}, #{status}, #{extAtt})
+    </insert>
+
+    <!-- 单个更新 -->
+    <update id="update" parameterType="com.crane.sharding.DO.TruckTraceDO">
+        update t_sco_truck_trace
+        <set>
+            <if test="truckTraceCode != null">
+                truck_trace_code = #{truckTraceCode},
+			</if>
+
+			<if test="status != null">
+				status = #{status},
+			</if>
+			<if test="extAtt != null">
+				ext_att = #{extAtt},
+			</if>
+        </set>
+        where ID = #{id}
+    </update>
+
+    <!-- 查询列表 -->
+    <select id="query" resultMap="BaseResultMap" parameterType="com.crane.sharding.query.TruckTraceQuery">
+        select
+        <include refid="Base_Column_List" />
+        from t_sco_truck_trace
+        where 1 = 1
+        <if test="truckTraceCode != null">
+			and truck_trace_code = #{truckTraceCode}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		<if test="extAtt != null">
+			and ext_att = #{extAtt}
+		</if>
+        <if test="sort != null">
+            order by #{sort}
+        </if>
+        <if test="pageSize != null and offset != null">
+            limit #{offset},#{pageSize}
+        </if>
+    </select>
+
+    <!-- 查询列表条数 -->
+    <select id="queryCount" resultType="java.lang.Integer" parameterType="com.crane.sharding.query.TruckTraceQuery">
+        select
+        count(1)
+        from t_sco_truck_trace
+        where 1 = 1
+		<if test="truckTraceCode != null">
+			and truck_trace_code = #{truckTraceCode}
+		</if>
+		<if test="status != null">
+			and status = #{status}
+		</if>
+		<if test="extAtt != null">
+			and ext_att = #{extAtt}
+		</if>
+    </select>
+
+    <!-- 单个查询 -->
+    <select id="queryById" parameterType="java.lang.Long" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List" />
+        from t_sco_truck_trace
+        where id = #{id}
+    </select>
+
+	<update id="truckArrival" parameterType="string">
+		update t_sco_truck_trace set status = 3 where truck_trace_code = #{truckTraceCode}
+	</update>
+</mapper>

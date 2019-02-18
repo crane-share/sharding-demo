@@ -1,0 +1,54 @@
+server:
+  port: 7001
+  compression:
+          enabled: true
+          mime-types:
+            -
+              application-json
+            -
+              application/xml
+            -
+              application/javascript
+            -
+              text/html
+            -
+              text/xml
+            -
+              text/plain
+            -
+              text/css
+          min-response-size: 2048
+  tomcat:
+    accesslog:
+      buffered: true
+      directory: /usr/songshu/logs/http_access_log
+      enabled: true
+      file-date-format: .yyyy-MM-dd
+      pattern:
+      prefix: access_log
+      rename-on-rotate: false
+      request-attributes-enabled: false
+      rotate: true
+      suffix: .log
+
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://snt-daily-pub.mysql.rds.aliyuncs.com/snt_sco?useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT%2B8
+    username: sntuoc
+    password: 1qaz!QAZ
+  datasource-01:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://snt-daily-pub.mysql.rds.aliyuncs.com/snt_sco_sub_01?useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT%2B8
+    username: sntuoc
+    password: 1qaz!QAZ
+  datasource-02:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://snt-daily-pub.mysql.rds.aliyuncs.com/snt_sco_sub_02?useUnicode=true&characterEncoding=UTF8&serverTimezone=GMT%2B8
+    username: sntuoc
+    password: 1qaz!QAZ
+
+## Mybatis 配置
+#mybatis:
+#  typeAliasesPackage: com.songshu.snt.tms.DO
+#  mapperLocations: classpath:mapper/*.xml
