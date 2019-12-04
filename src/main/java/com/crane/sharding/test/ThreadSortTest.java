@@ -2,6 +2,7 @@ package com.crane.sharding.test;
 
 import lombok.Data;
 
+import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.Semaphore;
 
 /**
@@ -13,9 +14,9 @@ import java.util.concurrent.Semaphore;
  */
 @Data
 public class ThreadSortTest implements Runnable{
-    /*countDown方式控制线程有序
-    private  static  CountDownLatch2 first = new CountDownLatch2(1);
-    private  static  CountDownLatch2 second = new CountDownLatch2(1);
+    //countDown方式控制线程有序
+    private  static  CountDownLatch first = new CountDownLatch(1);
+    private  static  CountDownLatch second = new CountDownLatch(1);
     private int i;
     @Override
     public void run() {
@@ -32,10 +33,10 @@ public class ThreadSortTest implements Runnable{
         thread1.start();
         second.await();
         thread2.start();
-    }*/
+    }
 
     //信号量方式控制线程有序
-    private static Semaphore semaphore = new Semaphore(1,true);
+    /*private static Semaphore semaphore = new Semaphore(1,true);
     private int i;
     @Override
     public void run() {
@@ -55,5 +56,5 @@ public class ThreadSortTest implements Runnable{
         Thread thread2 = new Thread(new ThreadSortTest());
         thread1.start();
         thread2.start();
-    }
+    }*/
 }
