@@ -40,7 +40,7 @@ public class StaticTest {
 
 
 //运行结果
- /*       2
+ /*     2
         3
         a=110,b=0,c=112
         1
